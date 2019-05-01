@@ -1,0 +1,8 @@
+{{root_path}}/shared/log/*.log {
+    daily
+    missingok
+    rotate 60
+    compress
+    delaycompress
+    notifempty
+}

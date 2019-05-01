@@ -1,0 +1,21 @@
+<div class="jumbotron">
+	<div class="card container col-md-5">
+    <h1 class="d-flex justify-content-center py-2">Login</h1>
+		<div class="card-body">
+			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+				<div class="form-group">
+					<label>Email</label>
+					<input type="email" class="form-control" formControlName="email" required>
+				</div>
+				<div class="form-group">
+					<label>Password</label>
+					<input type="password" class="form-control" formControlName="password" required>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">LogIn</button>
+					<span class="mx-2">or</span><a routerLink="/register">Register</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

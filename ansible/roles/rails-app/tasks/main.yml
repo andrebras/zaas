@@ -1,0 +1,15 @@
+- name: Create socket directory
+  file:
+    path: '{{root_path}}/shared/sockets'
+    state: directory
+
+- name: Create log directory
+  file:
+    path: '{{root_path}}/shared/log'
+    state: directory
+
+- name: Copy logrotate file
+  template:
+    src: templates/logrotate
+    dest: /etc/logrotate.d/rails
+  become: yes

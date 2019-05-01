@@ -1,0 +1,50 @@
+version: "3"
+services:
+  api:
+    build:
+      dockerfile: ./docker/api.dockerfile
+      context: .
+    container_name: saas-b2b-boilerplate-api
+    image: leandronsp/saas-b2b-boilerplate-api
+    ports:
+      - "3000:3000"
+    command: >
+      bash -c "bundle install --binstubs && ./bin/rake db:setup && ./bin/rails s -b 0.0.0.0"
+    volumes:
+      - bundle_cache:/var/www/saas-b2b-boilerplate-api/vendor/bundle
+      - .:/var/www/saas-b2b-boilerplate-api
+    environment:
+      - RAILS_ENV=development
+      - PORT=3000
+      - PG_HOST=db
+    networks:
+      - custom-network
+    depends_on:
+      - db
+  nginx:
+    build:
+      dockerfile: ./docker/nginx.dockerfile
+      context: .
+    image: nginx:1.15
+    ports:
+      - "80:80"
+    networks:
+      - custom-network
+    depends_on:
+      - api
+    links:
+      - api:api
+  db:
+    image: postgres:10.6
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./.pgdata:/var/lib/postgresql/data"
+    networks:
+      - custom-network
+volumes:
+  bundle_cache:
+networks:
+  custom-network:
+    driver: bridge

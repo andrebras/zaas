@@ -1,0 +1,10 @@
+server {
+  listen 80;
+  listen [::]:80;
+  server_name *.{{domain_name}};
+
+  try_files $uri $uri/ /index.html;
+
+  root {{root_path}};
+  index index.html index.htm;
+}

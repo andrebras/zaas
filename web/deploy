@@ -1,0 +1,4 @@
+#!/bin/sh
+
+npm run deploy
+scp -oStrictHostKeyChecking=no -r ./dist/saas-b2b-boilerplate-web/* ubuntu@95.179.187.155:/home/ubuntu/saas-b2b-boilerplate-web/

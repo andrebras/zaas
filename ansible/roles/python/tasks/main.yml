@@ -1,0 +1,5 @@
+- name: Refresh apt
+  raw: sudo apt-get update
+
+- name: Install python 2
+  raw: test -e /usr/bin/python || (sudo apt-get install -y python-apt)

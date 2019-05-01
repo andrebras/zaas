@@ -1,0 +1,8 @@
+- name: Refresh apt
+  raw: sudo apt-get update
+
+- name: Install NodeJS
+  command: apt-get install {{item}} -y
+  become: yes
+  with_items:
+    - nodejs

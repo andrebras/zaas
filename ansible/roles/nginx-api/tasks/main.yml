@@ -1,0 +1,36 @@
+- name: Add nginx repository
+  command: add-apt-repository -y ppa:nginx/stable
+  become: yes
+
+- name: Update apt
+  command: apt-get update
+  become: yes
+
+- name: Install nginx
+  command: apt-get install nginx -y
+  become: yes
+
+- name: Copy nginx.conf file
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+  become: yes
+
+- name: Copy nginx site config file
+  template:
+    src: 'site-http'
+    dest: '/etc/nginx/sites-available/{{application}}'
+  become: yes
+
+- name: Add to sites-available directory
+  file:
+    src: '/etc/nginx/sites-available/{{application}}'
+    dest: '/etc/nginx/sites-enabled/{{application}}'
+    state: link
+  become: yes
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  become: yes

@@ -1,0 +1,31 @@
+- name: Update apt
+  command: apt-get update
+  become: yes
+
+- name: Install Postgres
+  command: apt-get install {{item}} -y
+  become: yes
+  with_items:
+    - postgresql
+    - postgresql-contrib
+    - libpq-dev
+
+- name: Configure postgresql.conf
+  lineinfile:
+    dest: /etc/postgresql/10/main/postgresql.conf
+    insertafter: '#listen_addresses = '
+    line: "listen_addresses = '*'"
+  become: yes
+
+- name: Configure pg_hba.conf
+  lineinfile:
+    dest: /etc/postgresql/10/main/pg_hba.conf
+    line: 'host all all 0.0.0.0/0 trust'
+    insertbefore: BOF
+  become: yes
+
+- name: Restart postgres
+  service:
+    name: postgresql
+    state: restarted
+  become: yes

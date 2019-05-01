@@ -1,0 +1,15 @@
+- hosts: leandronsp
+  gather_facts: no
+  vars:
+    application: saas_b2b_boilerplate_web
+    stage: production
+    home_path: /home/ubuntu
+    root_path: '{{home_path}}/saas-b2b-boilerplate-web'
+    domain_name: leandronsp.com
+    protocol: http
+
+  roles:
+    - ./roles/common
+    - ./roles/python
+    - ./roles/nodejs
+    - ./roles/nginx-web

@@ -1,0 +1,16 @@
+- name: Update apt
+  command: apt-get update
+  become: yes
+
+- name: Install Ruby packages
+  command: apt-get install {{item}} -y
+  become: yes
+  with_items:
+    - ruby2.5
+    - ruby2.5-dev
+    - libxml2-dev
+    - libxslt-dev
+
+- name: Install bundler
+  command: gem install bundler
+  become: yes
